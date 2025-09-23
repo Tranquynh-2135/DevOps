@@ -5,7 +5,7 @@ pipeline {
         stage('Pull Code') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/<username>/<repo>.git'
+                    url: 'https://github.com/Tranquynh-2135/DevOps.git'
             }
         }
 
