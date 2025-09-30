@@ -9,28 +9,18 @@ pipeline {
             }
         }
 
-        stage('Build') {
+         stage('Build Docker Image') {
             steps {
-                sh 'echo "Building app..."'
-                # ví dụ nếu Node.js
-                sh 'npm install'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh 'echo "Running tests..."'
-                # ví dụ chạy test Node.js
-                sh 'npm test'
+                sh 'docker build -t mywebapp:latest .'
             }
         }
 
         stage('Deploy') {
             steps {
-                sh 'echo "Deploying app..."'
-                # ví dụ chạy docker-compose up
-                sh 'docker build -t myapp:latest .'
-                sh 'docker run -d -p 80:3000 myapp:latest'
+                sh '''
+                  docker rm -f myweb || true
+                  docker run -d -p 3000:3000 --name myweb mywebapp:latest
+                '''
             }
         }
     }
